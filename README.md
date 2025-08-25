@@ -1,0 +1,1 @@
+Displayed a little analysis on some GET routes with the help of FASTAPI, Pandas, Pydantic, and Uvicorn and also a POST route where users can add their responses, but there's a caveat to that: it can only be tested using SWAGGER UI. 
