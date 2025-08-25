@@ -4,7 +4,11 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-survey_df = pd.read_csv("survey.csv")
+try:
+    survey_df = pd.read_csv("survey.csv")
+except FileNotFoundError:
+    survey_df = pd.DataFrame(columns=["Name", "Age", "Gender", "City", "Rating", "Comment"])
+    
 gender_distribution = survey_df["Gender"].value_counts().to_dict()
 avg = round(survey_df["Rating"].mean(), 2)
 avg_rating = {"average_rating": avg}
@@ -33,10 +37,7 @@ class SurveyResponse(BaseModel):
     rating: int
     comment: str
     
-try:
-    survey_df = pd.read_csv("survey.csv")
-except FileNotFoundError:
-    survey_df = pd.DataFrame(columns=["Name", "Age", "Gender", "City", "Rating", "Comment"])
+
     
 @app.post("/add-response")
 def add_response(response: SurveyResponse):
